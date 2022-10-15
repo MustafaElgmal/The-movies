@@ -4,6 +4,7 @@ import React from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import Header1 from "../../components/header1";
 import { classNames } from "../../constants";
+import Link from "next/link";
 const reviews = {
   average: 4,
   totalCount: 1624,
@@ -105,9 +106,11 @@ const Film = () => {
                     className="h-12 w-12 rounded-full"
                   />
                   <div className="ml-4">
-                    <h4 className="text-sm font-bold text-gray-400">
+                    <Link href={`/members/${review.id}`}>
+                    <a className="text-sm font-bold text-gray-400">
                       {review.author}
-                    </h4>
+                    </a>
+                    </Link>
                     <div className="mt-1 flex items-center">
                       {[0, 1, 2, 3, 4].map((rating) => (
                         <StarIcon
