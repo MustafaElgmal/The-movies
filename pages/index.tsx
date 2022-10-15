@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Header1 from "../components/header1";
 import Home1 from "../components/home1";
+import Home2 from "../components/home2";
 
 const Home: NextPage = () => {
   return (
