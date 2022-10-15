@@ -12,7 +12,7 @@ export default function FilmCard() {
         <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
           {films.map((film) => (
             <Link key={film.id} href={`/films/${film.id}`}>
-              <div className="group relative border-r border-b border-gray-200 p-4 sm:p-6">
+              <div className="group relative border-r border-b border-gray-200 p-4 sm:p-6 cursor-pointer">
                 <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                   <img
                     src={film.imageSrc}
