@@ -5,7 +5,7 @@ import Link from "next/link";
 import { classNames, films } from "../constants";
 export default function FilmCard() {
   return (
-    <div className="bgcolor ">
+    <div className="bgcolor">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">films</h2>
 
@@ -54,11 +54,8 @@ export default function FilmCard() {
         </div>
       </div>
       <div>
-        <Link href="/signup">
-          <a className="m-3 flex justify-end xl:mr-36 text-xl font-bold uppercase txt cursor-pointer">
-            more
-          </a>
-        </Link>
+        <h1 className=" flex justify-end xl:mr-36 text-xl font-bold uppercase txt cursor-pointer">more</h1>
+       
       </div>
     </div>
   );

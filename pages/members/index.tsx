@@ -8,12 +8,13 @@ import { classNames, reviews } from "../../constants";
 const Members = () => {
   return (
     <div className="bgcolor min-h-screen">
-      <Header1 />
       <div className="memberbg">
-        <div className="bg-wraper2"></div>
+        <div className="bg-wraper2">
+          <Header1 />
+        </div>
       </div>
-      <div className="mx-auto  max-w-7xl  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
-        <h3 className="text-white pb-3">Members</h3>
+      <div className="mx-auto px-6  max-w-7xl  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
+        <h3 className="text-gray-500 pb-3">Members</h3>
 
         <div>
           <div className="divide-y divide-gray-200">

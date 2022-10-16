@@ -3,7 +3,7 @@ import React from "react";
 const Buttons = () => {
   return (
     <div className="bgcolor w-full">
-      <div className="flex mx-auto  max-w-7xl  sm:px-6 lg:px-8 lg:gap-20 pb-5 ">
+      <div className="flex mx-auto  max-w-7xl  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-20 ">
         <div>
           <h1 className="px-4 py-2 text-lg text-white">Filter By</h1>
         </div>

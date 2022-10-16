@@ -9,8 +9,8 @@ const Profile = () => {
   return (
     <div className="bgcolor min-h-screen">
       <Header1 />
-      <div className="flex justify-between mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="flex py-10 space-x-10">
+      <div className="sm:flex sm:justify-between  mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="flex  space-x-10">
           <div>
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -25,7 +25,7 @@ const Profile = () => {
             </button>
           </div>
         </div>
-        <div className="flex py-20 space-x-6">
+        <div className="flex py-10 sm:py-20 space-x-6">
           <div className="border-r px-5 ">
             <span className="flex justify-center text-gray-500 font-extrabold text-xl">
               20
@@ -40,7 +40,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto  max-w-7xl  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
+      <div className="mx-auto px-6   max-w-7xl   sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
         <h3 className="text-gray-500 pb-3">FAVORITE FILMS</h3>
         <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
           {films.map((film) => (

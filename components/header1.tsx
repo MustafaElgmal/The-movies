@@ -8,16 +8,16 @@ import { handelClick } from "../utils/functions";
 export default function Header1() {
   const [items, setItems] = useState(navItems);
   return (
-    <Disclosure as="nav" className="fixed fixed-top w-full z-10">
+    <Disclosure as="nav" className="w-full">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <Link href='/'>
+                <Link href="/">
                   <a className="text-2xl font-bold uppercase txt">The End</a>
                 </Link>
-                
+
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {items.map((item) => (
@@ -42,7 +42,9 @@ export default function Header1() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div className="flex space-x-2">
-                      <div className="text-gray-300 text-lg font-medium">Mustafa Elgmal</div>
+                      <div className="text-gray-300 text-lg font-medium">
+                        Mustafa Elgmal
+                      </div>
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <img
@@ -63,44 +65,19 @@ export default function Header1() {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
-                          {({ active }) => (
-                            
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-700" : "",
-                                "block px-4 py-2 text-sm text-white hover:text-white"
-                              )}
-                            >
+                          <Link href="/members/1">
+                            <a className="block px-4 py-2 text-sm text-white hover:text-white hover:bg-gray-700">
                               Your Profile
                             </a>
-                          )}
+                          </Link>
                         </Menu.Item>
+
                         <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-700" : "",
-                                "block px-4 py-2 text-sm text-white hover:text-white"
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-700" : "",
-                                "block px-4 py-2 text-sm text-white hover:text-white"
-                              )}
-                            >
+                          <Link href="/">
+                            <a className="block px-4 py-2 text-sm text-white hover:text-white hover:bg-gray-700">
                               Sign out
                             </a>
-                          )}
+                          </Link>
                         </Menu.Item>
                       </Menu.Items>
                     </Transition>
@@ -124,7 +101,7 @@ export default function Header1() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3 bg-black">
               {items.map((item) => (
-                <Link key={item.name} href="/">
+                <Link key={item.name} href={item.href}>
                   <Disclosure.Button
                     className={`${
                       !item.active
@@ -153,27 +130,18 @@ export default function Header1() {
                 </div>
               </div>
               <div className="mt-3 space-y-1 px-2">
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                >
-                  Your Profile
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                >
-                  Settings
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                >
-                  Sign out
-                </Disclosure.Button>
+                <Link href="/members/1">
+                  <a className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                    Your Profile
+                  </a>
+                </Link>
+
+                <Link href="/">
+                  <a className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                    {" "}
+                    Sign out
+                  </a>
+                </Link>
               </div>
             </div>
           </Disclosure.Panel>

@@ -8,7 +8,6 @@ import Landing from "./landing";
 const Home1 = () => {
   return (
     <div className="bg">
-      <Header1 />
       <Landing />
       <Buttons />
       <Films />
