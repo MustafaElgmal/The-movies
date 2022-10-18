@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  switch (req.body) {
+  switch (req.method) {
     case "GET":
       try {
         const { id } = req.query;
@@ -16,14 +16,12 @@ export default async function handler(
         if (!user) {
           return res.status(404).json({ message: "user is not found!" });
         }
-        const followings = await prisma.follower.findMany({
+        const favoriteFilms = await prisma.favoriteFilm.findMany({
           where: { userId: id as string },
         });
-        res
-          .status(200)
-          .json({ followings, numberOffollowings: followings.length });
+        res.status(200).json({ favoriteFilms });
       } catch (e) {
-        res.status(500).json({ error: "Server is down!" });
+        res.status(500).json({ error: "Server is dwon!" });
       }
       break;
     default:

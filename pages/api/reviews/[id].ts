@@ -49,6 +49,6 @@ export default async function handler(
        
       break;
     default:
-      res.status(200).json({ message: "Api is not found!" });
+      res.status(400).json({ message: "Api is not found!" });
   }
 }
