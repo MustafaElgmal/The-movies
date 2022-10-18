@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { navItems } from "./../constants/index";
 
 export const handelClick = (name: string, setItems: Function) => {
@@ -6,3 +7,7 @@ export const handelClick = (name: string, setItems: Function) => {
   );
   setItems(items);
 };
+
+
+
+

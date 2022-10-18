@@ -12,17 +12,26 @@ datasource db {
 
 model User {
   id                 String             @id
-  firstName          String
-  lastName           String
+  fullName           String
   email              String             @unique
   password           String
   bio                String?
   imageUrl           String?
   imageAlt           String?
   favoriteCategories FavoriteCategory[]
+  favoriteFilms     FavoriteFilm[]
   reviews            Review[]
   followers          Follower[]
   rates              Rate[]
+}
+
+model FavoriteFilm {
+  id     Int    @id @default(autoincrement())
+  userId String
+  filmId Int
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, filmId])
 }
 
 model FavoriteCategory {
