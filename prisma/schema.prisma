@@ -19,10 +19,23 @@ model User {
   imageUrl           String?
   imageAlt           String?
   favoriteCategories FavoriteCategory[]
-  favoriteFilms     FavoriteFilm[]
+  favoriteFilms      FavoriteFilm[]
   reviews            Review[]
   followers          Follower[]
   rates              Rate[]
+}
+
+model Film {
+  id          Int      @id
+  name        String
+  description String
+  auth        String
+  profilePath String
+  coverPath   String
+  categoryId  Int
+  raviews     Review[]
+  rates       Rate[]
+  category    Category @relation(fields: [categoryId], references: [id])
 }
 
 model FavoriteFilm {
@@ -58,6 +71,7 @@ model Review {
   userId String
   filmId Int
   user   User   @relation(fields: [userId], references: [id])
+  film   Film   @relation(fields: [filmId], references: [id])
 }
 
 model Rate {
@@ -66,4 +80,11 @@ model Rate {
   userId String
   filmId Int
   user   User   @relation(fields: [userId], references: [id])
+  film   Film   @relation(fields: [filmId], references: [id])
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  films Film[]
 }
