@@ -3,13 +3,23 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import Header1 from "../../components/header1";
+import { prisma } from "../../lib/prisma";
 import { classNames, reviews } from "../../constants";
 import Link from "next/link";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { Film } from "@prisma/client";
+import { AppProps } from "../../types";
 
-const Film = () => {
+const FilmPage = ({ film }: AppProps) => {
+  console.log(film);
   return (
     <div className="bgcolor min-h-screen">
-      <div className="filmbg">
+      <div
+        className="filmbg"
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/w780/${film?.coverPath})`,
+        }}
+      >
         <div className="bg-wraper2">
           <Header1 />
         </div>
@@ -17,7 +27,7 @@ const Film = () => {
       <div className="flex mx-auto px-6 max-w-7xl  sm:px-6 lg:px-8 gap-20 pb-5">
         <div>
           <img
-            src="https://a.ltrbxd.com/resized/film-poster/5/4/6/3/4/7/546347-don-t-worry-darling-0-230-0-345-crop.jpg?v=f458525152"
+            src={`https://image.tmdb.org/t/p/w780/${film?.profilePath}`}
             alt="film"
             width={700}
           />
@@ -25,17 +35,10 @@ const Film = () => {
 
         <div>
           <h1 className="font-extrabold text-xl sm:text-2xl text-white">
-            Don’t Worry Darling{" "}
-            <span className="block sm:pl-5 sm:inline font-medium text-sm text-gray-400">
-              Directed by Mustafa Elgmal
-            </span>
+            {film?.name}
           </h1>
-          <p className="pt-5 text-gray-400">WELCOME TO VICTORY.</p>
-          <p className="pt-5 text-gray-400">
-            A 1950s housewife living with her husband in a utopian experimental
-            community begins to worry that his glamorous company may be hiding
-            disturbing secrets.
-          </p>
+          <p className="pt-5 text-gray-400">WELCOME TO {film?.name}.</p>
+          <p className="pt-5 text-gray-400">{film?.description}.</p>
         </div>
       </div>
       <div className="mx-auto  max-w-7xl px-6  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
@@ -87,5 +90,24 @@ const Film = () => {
     </div>
   );
 };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const films = await prisma.film.findMany();
+  const paths = films.map((film) => {
+    return {
+      params: {
+        filmId: film.id.toString(),
+      },
+    };
+  });
+  return { paths, fallback: false };
+};
 
-export default Film;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const film = await prisma.film.findFirst({
+    where: { id: +params?.filmId! },
+    include: { raviews: true },
+  });
+  return { props: { film } };
+};
+
+export default FilmPage;

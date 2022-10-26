@@ -1,8 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
+import { useFormik } from "formik";
 import Link from "next/link";
 import React from "react";
+import * as Yup from "yup";
 
 export default function SignIn() {
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Full Name is required!"),
+      email: Yup.string()
+        .email("Email is not vaild!")
+        .required("Email is required!"),
+      password: Yup.string().required("Password is required!"),
+    }),
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
   return (
     <div className="flex min-h-screen bgcolor">
       <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -14,11 +33,10 @@ export default function SignIn() {
             <p className="mt-2 text-sm text-gray-400">
               Or{" "}
               <Link href="/signin">
-              <a  className="font-medium  hover:text-gray-100">
-                Already have an account
-              </a>
+                <a className="font-medium  hover:text-gray-100">
+                  Already have an account
+                </a>
               </Link>
-             
             </p>
           </div>
 
@@ -35,7 +53,7 @@ export default function SignIn() {
                       href="#"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span className="sr-only">Sign in with Facebook</span>
+                      <span className="sr-only">Sign up with Facebook</span>
                       <svg
                         width="24px"
                         height="24px"
@@ -56,7 +74,7 @@ export default function SignIn() {
                       href="#"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      <span className="sr-only">Sign in with Gmail</span>
+                      <span className="sr-only">Sign up with Gmail</span>
                       <svg
                         width="24px"
                         height="24px"
@@ -87,7 +105,7 @@ export default function SignIn() {
             </div>
 
             <div className="mt-6">
-              <form action="#" method="POST" className="space-y-6">
+              <form className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
@@ -99,10 +117,16 @@ export default function SignIn() {
                     <input
                       id="name"
                       name="name"
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       type="text"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     />
+                    {formik.touched.name && formik.errors.name ? (
+                      <p className="text-red-600">{formik.errors.name}</p>
+                    ) : null}
                   </div>
                 </div>
                 <div>
@@ -116,11 +140,17 @@ export default function SignIn() {
                     <input
                       id="email"
                       name="email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       type="email"
                       autoComplete="email"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     />
+                    {formik.touched.email && formik.errors.email ? (
+                      <p className="text-red-600">{formik.errors.email}</p>
+                    ) : null}
                   </div>
                 </div>
 
@@ -135,18 +165,25 @@ export default function SignIn() {
                     <input
                       id="password"
                       name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       type="password"
                       autoComplete="current-password"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     />
+                    {formik.touched.password && formik.errors.password ? (
+                      <p className="text-red-600">{formik.errors.password}</p>
+                    ) : null}
                   </div>
                 </div>
 
                 <div>
                   <button
-                    type="submit"
+                    type="button"
                     className="flex w-full justify-center rounded-md border border-transparent btn py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                    onClick={()=>formik.handleSubmit()}
                   >
                     Sign up
                   </button>

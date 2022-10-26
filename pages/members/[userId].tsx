@@ -4,8 +4,11 @@ import React from "react";
 import Header1 from "../../components/header1";
 import { classNames, films } from "../../constants";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { prisma } from "../../lib/prisma";
+import { AppProps } from "../../types";
 
-const Profile = () => {
+const Profile = ({user}:AppProps) => {
   return (
     <div className="bgcolor min-h-screen">
       <Header1 />
@@ -13,17 +16,22 @@ const Profile = () => {
         <div className="flex  space-x-10">
           <div>
             <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt="profile"
+              src={`${
+                user?.imageUrl
+                  ? user.imageUrl
+                  : "https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/sign/images/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvMzYwX0ZfMzQ2ODM5NjgzXzZuQVB6YmhwU2tJcGI4cG1Bd3Vma0M3YzVlRDd3WXdzLmpwZyIsImlhdCI6MTY2NjczODk5NiwiZXhwIjoxOTgyMDk4OTk2fQ.m8DMrMAaUazk13SE5o18af1ECIG400iofEsZ_M3_Jvk"
+              }`}
+              alt="Profile"
               className="h-40 w-40 rounded-full bg-gray-100"
             />
           </div>
           <div className="pt-5">
-            <h1 className="text-white text-xl font-bold">Mustafa Elgmal</h1>
+            <h1 className="text-white text-xl font-bold">{user?.fullName}</h1>
             <button className="mt-5 px-5 py-2 bg-gray-500 text-gray-300 uppercase hover:bg-gray-400 hover:text-white">
               Follow
             </button>
           </div>
+          
         </div>
         <div className="flex py-10 sm:py-20 space-x-6">
           <div className="border-r px-5 ">
@@ -88,6 +96,25 @@ const Profile = () => {
       </div>
     </div>
   );
+};
+export const getStaticPaths: GetStaticPaths = async () => {
+  const users = await prisma.user.findMany();
+  const paths = users.map((user) => {
+    return {
+      params: {
+        userId: user.id,
+      },
+    };
+  });
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const user = await prisma.user.findFirst({
+    where: { id: params?.userId as string },
+    include: { favoriteFilms: true },
+  });
+  return { props: { user } };
 };
 
 export default Profile;

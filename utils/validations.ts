@@ -117,5 +117,28 @@ export const followValidation = async (follow: {
       errors.push({ message: "UserId is not found!" });
     }
   }
+  return errors;
+};
+
+export const CategoryValidation = async (category: {
+  id: number;
+  name: string;
+}) => {
+  const { id, name } = category;
+  const errors: { message: string }[] = [];
+  if (!id) {
+    errors.push({ message: "Id is required!" });
+  } else {
+    if (typeof id !== "number") {
+      errors.push({ message: "Id must be number!" });
+    }
+  }
+  if (!name) {
+    errors.push({ message: "Name is required!" });
+  } else {
+    if (typeof name !== "string") {
+      errors.push({ message: "Name must be number!" });
+    }
+  }
   return errors
 };

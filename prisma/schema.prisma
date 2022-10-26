@@ -29,13 +29,11 @@ model Film {
   id          Int      @id
   name        String
   description String
-  auth        String
-  profilePath String
-  coverPath   String
-  categoryId  Int
+  profilePath String?
+  coverPath   String?
   raviews     Review[]
   rates       Rate[]
-  category    Category @relation(fields: [categoryId], references: [id])
+  filmGeners FilmGeners[]
 }
 
 model FavoriteFilm {
@@ -84,7 +82,17 @@ model Rate {
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
+  id    Int    @id
   name  String
-  films Film[]
+  @@unique([name])
+  filmGeners FilmGeners[]
+}
+
+model FilmGeners{
+  id Int @id @default(autoincrement())
+  filmId Int 
+  categoryId Int
+  film Film @relation(fields: [filmId],references: [id])
+  category Category @relation(fields: [categoryId],references: [id])
+
 }

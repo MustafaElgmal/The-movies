@@ -1,3 +1,4 @@
+export const Base_Url="https://api.themoviedb.org/3"
 export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }

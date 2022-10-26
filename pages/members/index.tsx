@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { StarIcon } from "@heroicons/react/20/solid";
+import { User } from "@prisma/client";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 import Header1 from "../../components/header1";
 import { classNames, reviews } from "../../constants";
+import { prisma } from "../../lib/prisma";
+import { AppProps } from "../../types";
 
-const Members = () => {
+const Members = ({ members }: AppProps) => {
   return (
     <div className="bgcolor min-h-screen">
       <div className="memberbg">
@@ -18,18 +22,22 @@ const Members = () => {
 
         <div>
           <div className="divide-y divide-gray-200">
-            {reviews.featured.map((review) => (
-              <div key={review.id} className="py-12">
+            {members?.map((member) => (
+              <div key={member.id} className="py-12">
                 <div className="flex items-center">
                   <img
-                    src={review.avatarSrc}
-                    alt={`${review.author}.`}
+                    src={`${
+                      member.imageUrl
+                        ? member.imageUrl
+                        : "https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/sign/images/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvMzYwX0ZfMzQ2ODM5NjgzXzZuQVB6YmhwU2tJcGI4cG1Bd3Vma0M3YzVlRDd3WXdzLmpwZyIsImlhdCI6MTY2NjczODk5NiwiZXhwIjoxOTgyMDk4OTk2fQ.m8DMrMAaUazk13SE5o18af1ECIG400iofEsZ_M3_Jvk"
+                    }`}
+                    alt="Profile"
                     className="h-12 w-12 rounded-full"
                   />
                   <div className="ml-4">
-                    <Link href={`/members/${review.id}`}>
+                    <Link href={`/members/${member.id}`}>
                       <a className="text-sm font-bold text-white">
-                        {review.author}
+                        {member.fullName}
                       </a>
                     </Link>
                     <div className="mt-1 flex items-center  text-gray-400">
@@ -44,6 +52,17 @@ const Members = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  let members: User[] = [];
+  try {
+    members = await prisma.user.findMany({ include: { reviews: true } });
+    return { props: {members} };
+  } catch (e) {
+    console.log(e);
+  }
+  return { props: {members} };
 };
 
 export default Members;
