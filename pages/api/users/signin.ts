@@ -17,16 +17,21 @@ export default async function handler(
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case "GET":
+    case "POST":
       try {
+        
         const errors = await signInValidation(req.body);
         if (errors.length > 0) {
+          
           return res.status(400).send(errors);
         }
-        const {email,password}:{email:string,password:string}=req.body
+        
+        const {email}:{email:string,password:string}=req.body
+       
         const user = await prisma.user.findFirst({ where: { email } });
-        res.status(200).json({ user });
+        res.status(201).json({ user });
       } catch (e) {
+        console.log(e)
         res.status(400).json({ error: "Server is down!" });
       }
       break;

@@ -5,9 +5,10 @@ export interface AppProps {
   film?:Film
   members?:User[]
   user?:User
+  profile?:User
 }
 export interface UserCreate {
-  id: string;
+  id?: string;
   fullName: string;
   email: string;
   password: string;

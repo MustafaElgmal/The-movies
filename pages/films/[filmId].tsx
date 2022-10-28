@@ -2,16 +2,14 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import Header1 from "../../components/header1";
 import { prisma } from "../../lib/prisma";
 import { classNames, reviews } from "../../constants";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { Film } from "@prisma/client";
 import { AppProps } from "../../types";
+import Header from "../../components/header";
 
 const FilmPage = ({ film }: AppProps) => {
-  console.log(film);
   return (
     <div className="bgcolor min-h-screen">
       <div
@@ -21,7 +19,7 @@ const FilmPage = ({ film }: AppProps) => {
         }}
       >
         <div className="bg-wraper2">
-          <Header1 />
+          <Header />
         </div>
       </div>
       <div className="flex mx-auto px-6 max-w-7xl  sm:px-6 lg:px-8 gap-20 pb-5">

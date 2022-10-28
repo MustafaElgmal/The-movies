@@ -1,10 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useFormik } from "formik";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import * as Yup from "yup";
+import { signInUser } from "../utils/apis";
 
 export default function SignIn() {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,7 +22,8 @@ export default function SignIn() {
       password: Yup.string().required("Password is required!"),
     }),
     onSubmit: async (values) => {
-      console.log(values);
+      await signInUser(values, router,supabaseClient);
+      formik.resetForm()
     },
   });
   return (
@@ -48,7 +54,15 @@ export default function SignIn() {
                 <div className="mt-1 grid grid-cols-2 gap-3">
                   <div>
                     <a
-                      href="#"
+                      
+                      onClick={async ()=>{
+                        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                          provider: "facebook",
+                        });
+                        console.log(data)
+                        router.push("/");
+                      }}
+                    
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">Sign in with Facebook</span>
@@ -104,7 +118,7 @@ export default function SignIn() {
 
             <div className="mt-6">
               <form className="space-y-6">
-              <div>
+                <div>
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-400 pb-3"
@@ -154,8 +168,6 @@ export default function SignIn() {
                   </div>
                 </div>
 
-               
-
                 <div className="flex items-center justify-between">
                   <div className="text-sm">
                     <a
@@ -173,7 +185,7 @@ export default function SignIn() {
                   <button
                     type="button"
                     className="flex w-full justify-center rounded-md border border-transparent btn py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    onClick={()=>formik.handleSubmit()}
+                    onClick={() => formik.handleSubmit()}
                   >
                     Sign in
                   </button>

@@ -5,6 +5,7 @@ import {
   getCategoriesFromMovieApi,
   getFilmsFromMovieApi,
   getPopularFilms,
+  getUserProfile,
 } from "../utils/apis";
 import { prisma } from "../lib/prisma";
 import Landing from "../components/landing";
@@ -14,22 +15,29 @@ import { classNames } from "../constants";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../redux/app/hookes";
-import { generateIndex, generateNumber } from "../utils/functions";
+import { generateNumber } from "../utils/functions";
+import {
+  createBrowserSupabaseClient,
+  withPageAuth,
+} from "@supabase/auth-helpers-nextjs";
+import { AppProps } from "../types";
+import { setProfile } from "../redux/features/profileSlice";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const Home: NextPage = () => {
   const films = useAppSelector((state) => state.filmsSlice.popularFilms);
   const [pageNo, setPageNo] = useState(generateNumber());
-  const [imageUrl, setImageUrl] = useState(
-    "https://a.ltrbxd.com/resized/sm/upload/q2/0n/4m/oh/pearl-1200-1200-675-675-crop-000000.jpg?v=0ed37f5964"
-  );
-
+  const [imageUrl, setImageUrl] = useState();
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   const dispatch = useDispatch();
   const updatePopularFilms = async () => {
     await getPopularFilms(dispatch, pageNo, setImageUrl);
   };
-  useEffect(() => {
+
+
+  useEffect(()=>{
     updatePopularFilms();
-  }, [pageNo]);
+  },[pageNo])
   return (
     <div className="bgcolor w-full min-h-screen">
       <Head>
@@ -46,7 +54,7 @@ const Home: NextPage = () => {
         <Landing />
         <div className="bgcolor">
           <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
-            <h3 className="text-gray-500 pb-3">Popular Films</h3>
+            <h3 className="text-gray-500 pb-3 pt-10">Popular Films</h3>
             <h2 className="sr-only">films</h2>
 
             <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">

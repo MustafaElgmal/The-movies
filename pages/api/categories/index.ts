@@ -10,7 +10,7 @@ export default async function handler(
   switch (req.method) {
     case "POST":
       try {
-        console.log(req.body)
+        
         const errors = await CategoryValidation(req.body);
         if (errors.length > 0) {
           return res.status(400).send(errors);

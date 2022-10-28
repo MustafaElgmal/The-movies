@@ -1,25 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useFormik } from "formik";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import * as Yup from "yup";
+import { createUser } from "../utils/apis";
 
 export default function SignIn() {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      fullName: "",
       email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Full Name is required!"),
+      fullName: Yup.string().required("FullName is required!"),
       email: Yup.string()
         .email("Email is not vaild!")
         .required("Email is required!"),
       password: Yup.string().required("Password is required!"),
     }),
     onSubmit: async (values) => {
-      console.log(values);
+      await createUser(values, router,supabaseClient);
+      formik.resetForm();
     },
   });
   return (
@@ -116,16 +122,16 @@ export default function SignIn() {
                   <div className="mt-1">
                     <input
                       id="name"
-                      name="name"
-                      value={formik.values.name}
+                      name="fullName"
+                      value={formik.values.fullName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       type="text"
                       required
                       className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-red-800 focus:outline-none focus:ring-red-800 sm:text-sm"
                     />
-                    {formik.touched.name && formik.errors.name ? (
-                      <p className="text-red-600">{formik.errors.name}</p>
+                    {formik.touched.fullName && formik.errors.fullName ? (
+                      <p className="text-red-600">{formik.errors.fullName}</p>
                     ) : null}
                   </div>
                 </div>
@@ -183,7 +189,7 @@ export default function SignIn() {
                   <button
                     type="button"
                     className="flex w-full justify-center rounded-md border border-transparent btn py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-                    onClick={()=>formik.handleSubmit()}
+                    onClick={() => formik.handleSubmit()}
                   >
                     Sign up
                   </button>

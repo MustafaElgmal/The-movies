@@ -5,13 +5,6 @@ import bcrypt from "bcrypt";
 export const UserValidation = async (user: UserCreate) => {
   const errors: { message: string }[] = [];
   const { id, fullName, email, password } = user;
-  if (!id) {
-    errors.push({ message: "Id is required!" });
-  } else {
-    if (typeof id !== "string") {
-      errors.push({ message: "Id Must be string!" });
-    }
-  }
   if (!fullName) {
     errors.push({ message: "FullName is required!" });
   }
@@ -36,6 +29,14 @@ export const UserValidation = async (user: UserCreate) => {
       });
     }
   }
+
+  if (!id) {
+    errors.push({ message: "Id is required!" });
+  } else {
+    if (typeof id !== "string") {
+      errors.push({ message: "Id Must be string!" });
+    }
+  }
   return errors;
 };
 
@@ -45,23 +46,30 @@ export const signInValidation = async (user: {
 }) => {
   const errors: { message: string }[] = [];
   const { email, password } = user;
+  
   if (!email) {
     errors.push({ message: "Email is required!" });
   } else {
+    
     if (!validator.isEmail(email)) {
       errors.push({ message: "Email is not vaild!" });
     }
     const user = await prisma.user.findFirst({ where: { email } });
     if (!user) {
       errors.push({ message: "Email is not exists!" });
+    }else{
+      if (!password) {
+        errors.push({ message: "Password is required!" });
+      } else {
+        const vaild = await bcrypt.compare(password, user?.password!);
+        if (!vaild) {
+          errors.push({ message: "Password is not vaild!" });
+        }
+      }
+
     }
-    if (!password) {
-      errors.push({ message: "Password is required!" });
-    }
-    const vaild = await bcrypt.compare(password, user?.password!);
-    if (!vaild) {
-      errors.push({ message: "Password is not vaild!" });
-    }
+    
+    
   }
   return errors;
 };
@@ -140,5 +148,22 @@ export const CategoryValidation = async (category: {
       errors.push({ message: "Name must be number!" });
     }
   }
-  return errors
+  return errors;
 };
+
+export const photoValidation=(photo:{url:string})=>{
+  const errors: { message: string }[] = [];
+  const {url}=photo
+  if (!url) {
+    errors.push({ message: "Url is required!" });
+  }else{
+    const vaild=validator.isURL(url)
+    if(!vaild){
+      errors.push({ message: "Url is not vaild!" });
+
+    }
+  }
+  console.log(errors)
+  return errors
+
+}

@@ -1,4 +1,4 @@
-export const Base_Url="https://api.themoviedb.org/3"
+export const Base_Url = "https://api.themoviedb.org/3";
 export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -6,6 +6,10 @@ export function classNames(...classes: string[]) {
 export const navItems = [
   { name: "signin", href: "/signin", active: false },
   { name: "create account", href: "/signup", active: false },
+  { name: "films", href: "/films", active: false },
+  { name: "members", href: "/members", active: false },
+];
+export const navItems2 = [
   { name: "films", href: "/films", active: false },
   { name: "members", href: "/members", active: false },
 ];
@@ -55,7 +59,7 @@ export const films = [
   // More films...
 ];
 
-export const  reviews = {
+export const reviews = {
   average: 4,
   totalCount: 1624,
   counts: [
