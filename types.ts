@@ -59,3 +59,5 @@ export interface userType extends User {
 export interface favoriteFilmType extends FavoriteFilm {
   film: FilmType;
 }
+
+

@@ -16,28 +16,20 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../redux/app/hookes";
 import { generateNumber } from "../utils/functions";
-import {
-  createBrowserSupabaseClient,
-  withPageAuth,
-} from "@supabase/auth-helpers-nextjs";
-import { AppProps } from "../types";
-import { setProfile } from "../redux/features/profileSlice";
-import { useUser } from "@supabase/auth-helpers-react";
 
 const Home: NextPage = () => {
   const films = useAppSelector((state) => state.filmsSlice.popularFilms);
   const [pageNo, setPageNo] = useState(generateNumber());
   const [imageUrl, setImageUrl] = useState();
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
   const dispatch = useDispatch();
   const updatePopularFilms = async () => {
     await getPopularFilms(dispatch, pageNo, setImageUrl);
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     updatePopularFilms();
-  },[pageNo])
+  }, [pageNo]);
   return (
     <div className="bgcolor w-full min-h-screen">
       <Head>
@@ -79,13 +71,13 @@ const Home: NextPage = () => {
                         </a>
                       </h3>
                       <div className="mt-3 flex flex-col items-center">
-                        <p className="sr-only">{film.rating} out of 5 stars</p>
+                        
                         <div className="flex items-center">
                           {[0, 1, 2, 3, 4].map((rating) => (
                             <StarIcon
                               key={rating}
                               className={classNames(
-                                film.rating > rating
+                                5 > rating
                                   ? "text-yellow-400"
                                   : "text-gray-200",
                                 "flex-shrink-0 h-5 w-5"
@@ -94,9 +86,6 @@ const Home: NextPage = () => {
                             />
                           ))}
                         </div>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {film.totalReviews} reviews
-                        </p>
                       </div>
                     </div>
                   </div>

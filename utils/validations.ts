@@ -2,6 +2,7 @@ import { UserCreate } from "./../types";
 import validator from "validator";
 import { prisma } from "../lib/prisma";
 import bcrypt from "bcrypt";
+import { NextApiRequest } from "next";
 export const UserValidation = async (user: UserCreate) => {
   const errors: { message: string }[] = [];
   const { id, fullName, email, password } = user;
@@ -46,18 +47,17 @@ export const signInValidation = async (user: {
 }) => {
   const errors: { message: string }[] = [];
   const { email, password } = user;
-  
+
   if (!email) {
     errors.push({ message: "Email is required!" });
   } else {
-    
     if (!validator.isEmail(email)) {
       errors.push({ message: "Email is not vaild!" });
     }
     const user = await prisma.user.findFirst({ where: { email } });
     if (!user) {
       errors.push({ message: "Email is not exists!" });
-    }else{
+    } else {
       if (!password) {
         errors.push({ message: "Password is required!" });
       } else {
@@ -66,10 +66,7 @@ export const signInValidation = async (user: {
           errors.push({ message: "Password is not vaild!" });
         }
       }
-
     }
-    
-    
   }
   return errors;
 };
@@ -151,19 +148,37 @@ export const CategoryValidation = async (category: {
   return errors;
 };
 
-export const photoValidation=(photo:{url:string})=>{
+export const photoValidation = (photo: { url: string }) => {
   const errors: { message: string }[] = [];
-  const {url}=photo
+  const { url } = photo;
   if (!url) {
     errors.push({ message: "Url is required!" });
-  }else{
-    const vaild=validator.isURL(url)
-    if(!vaild){
+  } else {
+    const vaild = validator.isURL(url);
+    if (!vaild) {
       errors.push({ message: "Url is not vaild!" });
-
     }
   }
-  console.log(errors)
-  return errors
+  console.log(errors);
+  return errors;
+};
 
-}
+export const filmValidation = (req: NextApiRequest) => {
+  const errors: { message: string }[] = [];
+  if (!req.query.page) {
+    errors.push({ message: "Please must well pagination!" });
+  } else {
+    const page = +req.query.page * 10;
+    if (+req.query.page <= 0 || page / 10 !== +req.query.page) {
+      errors.push({ message: "Please must enter postive number as page!" });
+    }
+  }
+  if (!req.query.category) {
+    errors.push({ message: "Please must well pagination as category!" });
+  } else {
+    if (typeof req.query.page !== "string") {
+      errors.push({ message: "Please must enter string ascategory!" });
+    }
+  }
+  return errors;
+};

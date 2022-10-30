@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: { category: string } = {
-  category: "popular",
+  category: "Popular",
 };
 export const categorySlice = createSlice({
   name: "category",

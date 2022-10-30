@@ -3,7 +3,7 @@ import { Movie, UserCreate } from "./../types";
 import { Base_Url } from "./../constants/index";
 import { Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setPopularFilms } from "../redux/features/filmsSlice";
+import { setFilterFilms, setPopularFilms } from "../redux/features/filmsSlice";
 import { NextRouter } from "next/router";
 import { setProfile } from "../redux/features/profileSlice";
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -178,3 +178,13 @@ export const addPhoto = async (
     console.log(e);
   }
 };
+
+export const getFilterFilms=async(pageNo:number,category:string,dispatch:Dispatch)=>{
+  try{
+    const res=await axios.get(`/api/films?page=${pageNo}&category=${category}`)
+    dispatch(setFilterFilms(res.data.results))
+
+  }catch(e){
+    console.log(e)
+  }
+}

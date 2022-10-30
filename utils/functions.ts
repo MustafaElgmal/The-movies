@@ -72,3 +72,7 @@ export const calcRate = (filmRateS: Rate[]) => {
   }
   return sum / filmRateS.length;
 };
+
+
+
+
