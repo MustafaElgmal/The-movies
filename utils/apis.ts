@@ -7,36 +7,7 @@ import { setFilterFilms, setPopularFilms } from "../redux/features/filmsSlice";
 import { NextRouter } from "next/router";
 import { setProfile } from "../redux/features/profileSlice";
 import { SupabaseClient } from "@supabase/supabase-js";
-export const getCategoriesFromMovieApi = async () => {
-  let categories: { id: number; name: string }[];
-  try {
-    const res = await axios.get(
-      `${Base_Url}/genre/movie/list?api_key=${process.env.MOVIE_KEY}&language=en-US`
-    );
-    categories = res.data.genres;
-  } catch (e) {
-    throw e;
-  }
-  return categories;
-};
 
-export const getFilmsFromMovieApi = async () => {
-  let films: Movie[] = [];
-  // try {
-  //   for (let i =1; i <= 500; i++) {
-  //     const res = await axios.get(
-  //       `${Base_Url}/discover/movie?api_key=${process.env.MOVIE_KEY}&page=${i}`
-  //     );
-  //     for (let j = 0; j < res.data.results.length; j++) {
-  //       films.push(res.data.results[j]);
-  //     }
-  //   }
-  // } catch (e) {
-  //   throw e;
-  // }
-
-  return films;
-};
 
 export const createUser = async (
   userr: UserCreate,
@@ -111,13 +82,7 @@ export const getCategories = async (setCategories: Function) => {
     console.log(e);
   }
 };
-export const getFilms = async (pageNo: number) => {
-  try {
-    const res = await axios.get(`/api/films?page=${pageNo}`);
-  } catch (e) {
-    console.log(e);
-  }
-};
+
 
 export const getPopularFilms = async (
   dispatch: Dispatch,

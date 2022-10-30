@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import type {  NextPage } from "next";
 import Head from "next/head";
 import {
-  getCategoriesFromMovieApi,
-  getFilmsFromMovieApi,
   getPopularFilms,
 } from "../utils/apis";
-import { prisma } from "../lib/prisma";
 import Landing from "../components/landing";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/20/solid";
@@ -122,90 +119,5 @@ const Home: NextPage = () => {
   );
 };
 
-// export const getStaticProps: GetStaticProps = async () => {
-//   try {
-//     const categories = await getCategoriesFromMovieApi();
-//     const films = await getFilmsFromMovieApi();
-//     for (let i = 0; i < categories.length; i++) {
-//       const category = await prisma.category.findFirst({
-//         where: { id: categories[i].id },
-//       });
-//       if (!category) {
-//         await prisma.category.create({
-//           data: {
-//             id: categories[i].id,
-//             name: categories[i].name,
-//           },
-//         });
-//       }
-//     }
-//     for (let i = 0; i < films.length; i++) {
-//       const film = await prisma.film.findFirst({ where: { id: films[i].id } });
-//       if (!film) {
-//         if (films[i].poster_path && films[i].backdrop_path) {
-//           const profilePath = films[i].poster_path.split("/");
-//           const coverPath = films[i].backdrop_path.split("/");
-//           await prisma.film.create({
-//             data: {
-//               id: films[i].id,
-//               name: films[i].title,
-//               description: films[i].overview,
-//               profilePath: profilePath[profilePath.length - 1],
-//               coverPath: coverPath[coverPath.length - 1],
-//             },
-//           });
-//         } else if (films[i].poster_path) {
-//           const profilePath = films[i].poster_path.split("/");
-//           await prisma.film.create({
-//             data: {
-//               id: films[i].id,
-//               name: films[i].title,
-//               description: films[i].overview,
-//               profilePath: profilePath[profilePath.length - 1],
-//             },
-//           });
-//         } else if (films[i].backdrop_path) {
-//           const coverPath = films[i].backdrop_path.split("/");
-//           await prisma.film.create({
-//             data: {
-//               id: films[i].id,
-//               name: films[i].title,
-//               description: films[i].overview,
-//               coverPath: coverPath[coverPath.length - 1],
-//             },
-//           });
-//         } else {
-//           await prisma.film.create({
-//             data: {
-//               id: films[i].id,
-//               name: films[i].title,
-//               description: films[i].overview,
-//             },
-//           });
-//         }
-
-//         for (let j = 0; j < films[i].genre_ids.length; j++) {
-//           await prisma.filmGeners.create({
-//             data: {
-//               filmId: films[i].id,
-//               categoryId: films[i].genre_ids[j],
-//             },
-//           });
-//         }
-//       }
-//     }
-
-//     return {
-//       props: { categories },
-//       revalidate: 604800,
-//     };
-//   } catch (e) {
-//     console.log(e);
-//   }
-//   return {
-//     props: { categories: [] },
-//     revalidate: 604800,
-//   };
-// };
 
 export default Home;
