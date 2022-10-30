@@ -55,7 +55,6 @@ export default function FilmCard() {
       </div>
       <div>
         <h1 className=" flex justify-end xl:mr-36 text-xl font-bold uppercase txt cursor-pointer">more</h1>
-       
       </div>
     </div>
   );

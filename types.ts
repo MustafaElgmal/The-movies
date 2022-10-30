@@ -1,17 +1,34 @@
-import { Category, Film, User } from "@prisma/client";
+import {
+  Category,
+  FavoriteCategory,
+  FavoriteFilm,
+  Film,
+  Follower,
+  Rate,
+  Review,
+  User,
+} from "@prisma/client";
 
 export interface AppProps {
   categories?: Category[];
-  film?:Film
-  members?:User[]
-  user?:User
-  profile?:User
+  film?: Film;
+  members?: userType[];
+  user?: userType;
+  profile?: User;
+  slidesPerView?: number;
+  favoriteFilms?: FilmType[];
+  followings?: Follower[];
+  followers?: Follower[];
 }
 export interface UserCreate {
   id?: string;
   fullName: string;
   email: string;
   password: string;
+}
+export interface FilmType extends Film {
+  raviews: Review[];
+  rates: Rate[];
 }
 
 export interface Movie {
@@ -30,8 +47,15 @@ export interface Movie {
   backdrop_path: string;
   genre_ids: number[];
 }
-export interface FilmType extends Movie{
-  totalReviews:number,
-  rating:number
 
+export interface userType extends User {
+  favoriteCategories: FavoriteCategory[];
+  favoriteFilms: favoriteFilmType[];
+  followers: Follower[];
+  followings: number;
+  reviews:Review[]
+}
+
+export interface favoriteFilmType extends FavoriteFilm {
+  film: FilmType;
 }

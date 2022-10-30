@@ -40,6 +40,9 @@ input:focus {
 .txt {
   color: #8c1f26;
 }
+.bgco{
+  background-color: #1f0305;
+}
 .bgcolor {
   background: #14181c;
 }

@@ -34,6 +34,7 @@ model Film {
   raviews     Review[]
   rates       Rate[]
   filmGeners FilmGeners[]
+  favoriteFilms      FavoriteFilm[]
 }
 
 model FavoriteFilm {
@@ -41,7 +42,7 @@ model FavoriteFilm {
   userId String
   filmId Int
   user   User   @relation(fields: [userId], references: [id])
-
+  film  Film  @relation(fields: [filmId],references: [id])
   @@unique([userId, filmId])
 }
 
@@ -59,7 +60,6 @@ model Follower {
   userId     String
   followerId String
   user       User   @relation(fields: [userId], references: [id])
-
   @@unique([userId, followerId])
 }
 
@@ -74,7 +74,7 @@ model Review {
 
 model Rate {
   id     Int    @id @default(autoincrement())
-  star   String
+  star   Int
   userId String
   filmId Int
   user   User   @relation(fields: [userId], references: [id])

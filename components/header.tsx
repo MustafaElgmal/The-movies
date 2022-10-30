@@ -170,9 +170,7 @@ export default function Header() {
                             <Menu.Item>
                               <p
                                 className="block px-4 py-2 text-sm text-white hover:text-white hover:bg-gray-700 cursor-pointer"
-                                onClick={() =>
-                                  router.push(`/members/${profile.id}`)
-                                }
+                                onClick={() => router.push(`/members/profile`)}
                               >
                                 Your Profile
                               </p>

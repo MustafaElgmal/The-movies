@@ -1,11 +1,11 @@
-import { FilmType } from './../../types';
+import { FilmType } from "./../../types";
 import { Film } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Movie } from "../../types";
 
-const initialState: { popularFilms: FilmType[]; films: Film[] } = {
+const initialState: { popularFilms: FilmType[]; FilterFilms: Film[] } = {
   popularFilms: [],
-  films: [],
+  FilterFilms: [],
 };
 
 export const filmsSlice = createSlice({
@@ -15,12 +15,11 @@ export const filmsSlice = createSlice({
     setPopularFilms: (state, action: PayloadAction<FilmType[]>) => {
       state.popularFilms = action.payload;
     },
-    setFilms: (state, action: PayloadAction<Film[]>) => {
-      for (let i = 0; i < action.payload.length; i++)
-        state.films.push(action.payload[i]);
+    setFilterFilms: (state, action: PayloadAction<Film[]>) => {
+      state.FilterFilms = action.payload;
     },
   },
 });
 
-export const {setFilms,setPopularFilms} = filmsSlice.actions;
+export const { setFilterFilms, setPopularFilms } = filmsSlice.actions;
 export default filmsSlice.reducer;

@@ -171,7 +171,7 @@ export const addPhoto = async (
       const res = await axios.post(`/api/users/photo/${id}`, {
         url: url.publicUrl,
       });
-      console.log(res.data.user)
+     
       dispatch(setProfile(res.data.user));
     }
   } catch (e) {
