@@ -3,7 +3,7 @@ import { UserValidation } from "./../../../utils/validations";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../lib/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 type Data = {
   name?: string;
   message?: string;

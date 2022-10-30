@@ -1,7 +1,7 @@
 import { UserCreate } from "./../types";
 import validator from "validator";
 import { prisma } from "../lib/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextApiRequest } from "next";
 export const UserValidation = async (user: UserCreate) => {
   const errors: { message: string }[] = [];
