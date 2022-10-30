@@ -89,20 +89,14 @@ const FilmPage = ({ film }: AppProps) => {
   );
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const films = await prisma.film.findMany();
-  const paths = films.map((film) => {
-    return {
-      params: {
-        filmId: film.id.toString(),
-      },
-    };
-  });
-  return { paths, fallback: false };
+
+  return { paths:[], fallback:'blocking' };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id=context.params?.filmId
   const film = await prisma.film.findFirst({
-    where: { id: +params?.filmId! },
+    where: { id:+id! },
     include: { raviews: true },
   });
   return { props: { film } };

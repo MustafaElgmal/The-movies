@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { classNames, films } from "../../constants";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import { prisma } from "../../lib/prisma";
 import { AppProps } from "../../types";
 import Header from "../../components/header";
@@ -100,20 +100,13 @@ const User = ({ user, followings }: AppProps) => {
   );
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const users = await prisma.user.findMany();
-  const paths = users.map((user) => {
-    return {
-      params: {
-        userId: user.id,
-      },
-    };
-  });
-  return { paths, fallback: false };
+  return { paths: [], fallback: "blocking" };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context.params?.userId;
   const user = await prisma.user.findFirst({
-    where: { id: params?.userId as string },
+    where: { id: id as string },
     include: {
       favoriteFilms: {
         include: { film: { include: { raviews: true, rates: true } } },
@@ -122,11 +115,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   });
   const followings = await prisma.follower.findMany({
-    where: { followerId: params?.userId as string },
+    where: { followerId: id as string },
   });
   return {
     props: { user, followings },
-    revalidate: 1,
   };
 };
 
