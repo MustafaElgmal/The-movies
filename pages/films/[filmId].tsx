@@ -3,7 +3,7 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { prisma } from "../../lib/prisma";
-import { classNames, reviews,films } from "../../constants";
+import { classNames, reviews } from "../../constants";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { AppProps } from "../../types";
@@ -12,7 +12,7 @@ import Header from "../../components/header";
 const FilmPage = ({ film }: AppProps) => {
   return (
     <div className="bgcolor min-h-screen">
-      {/* <div
+      <div
         className="filmbg"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w780/${film?.coverPath})`,
@@ -84,11 +84,12 @@ const FilmPage = ({ film }: AppProps) => {
             ))}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
 export const getStaticPaths: GetStaticPaths = async () => {
+  const films = await prisma.film.findMany();
   const paths = films.map((film) => {
     return {
       params: {
