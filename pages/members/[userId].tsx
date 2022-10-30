@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import React, { useState } from "react";
-import { classNames, films } from "../../constants";
+import { classNames } from "../../constants";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { prisma } from "../../lib/prisma";
 import { AppProps } from "../../types";
 import Header from "../../components/header";
@@ -99,10 +98,6 @@ const User = ({ user, followings }: AppProps) => {
     </div>
   );
 };
-export const getStaticPaths: GetStaticPaths = async () => {
-  return { paths: [], fallback: "blocking" };
-};
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.userId;
   const user = await prisma.user.findFirst({
