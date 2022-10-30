@@ -12,7 +12,7 @@ import Header from "../../components/header";
 const FilmPage = ({ film }: AppProps) => {
   return (
     <div className="bgcolor min-h-screen">
-      <div
+      {/* <div
         className="filmbg"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w780/${film?.coverPath})`,
@@ -84,7 +84,7 @@ const FilmPage = ({ film }: AppProps) => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
