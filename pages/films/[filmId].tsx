@@ -3,7 +3,7 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { prisma } from "../../lib/prisma";
-import { classNames, reviews } from "../../constants";
+import { classNames, reviews,films } from "../../constants";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { AppProps } from "../../types";
@@ -88,24 +88,23 @@ const FilmPage = ({ film }: AppProps) => {
     </div>
   );
 };
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const films = await prisma.film.findMany();
-//   const paths = films.map((film) => {
-//     return {
-//       params: {
-//         filmId: film.id.toString(),
-//       },
-//     };
-//   });
-//   return { paths, fallback: false };
-// };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = films.map((film) => {
+    return {
+      params: {
+        filmId: film.id.toString(),
+      },
+    };
+  });
+  return { paths, fallback: false };
+};
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const film = await prisma.film.findFirst({
-//     where: { id: +params?.filmId! },
-//     include: { raviews: true },
-//   });
-//   return { props: { film } };
-// };
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const film = await prisma.film.findFirst({
+    where: { id: +params?.filmId! },
+    include: { raviews: true },
+  });
+  return { props: { film } };
+};
 
 export default FilmPage;
