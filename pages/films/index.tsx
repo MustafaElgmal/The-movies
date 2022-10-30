@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import {  GetStaticProps } from "next";
 import React from "react";
 import { useDispatch } from "react-redux";
 import FilmCards from "../../components/filmCard";

@@ -5,7 +5,6 @@ import {
   getCategoriesFromMovieApi,
   getFilmsFromMovieApi,
   getPopularFilms,
-  getUserProfile,
 } from "../utils/apis";
 import { prisma } from "../lib/prisma";
 import Landing from "../components/landing";

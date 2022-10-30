@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-
-import { User } from "@prisma/client";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import RecomendedUser from "../../components/recomendedUser";
