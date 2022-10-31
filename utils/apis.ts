@@ -8,7 +8,6 @@ import { NextRouter } from "next/router";
 import { setProfile } from "../redux/features/profileSlice";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-
 export const createUser = async (
   userr: UserCreate,
   router: NextRouter,
@@ -83,7 +82,6 @@ export const getCategories = async (setCategories: Function) => {
   }
 };
 
-
 export const getPopularFilms = async (
   dispatch: Dispatch,
   pageNo: number,
@@ -136,7 +134,7 @@ export const addPhoto = async (
       const res = await axios.post(`/api/users/photo/${id}`, {
         url: url.publicUrl,
       });
-     
+
       dispatch(setProfile(res.data.user));
     }
   } catch (e) {
@@ -144,12 +142,27 @@ export const addPhoto = async (
   }
 };
 
-export const getFilterFilms=async(pageNo:number,category:string,dispatch:Dispatch)=>{
-  try{
-    const res=await axios.get(`/api/films?page=${pageNo}&category=${category}`)
-    dispatch(setFilterFilms(res.data.results))
-
-  }catch(e){
-    console.log(e)
+export const getFilterFilms = async (
+  pageNo: number,
+  category: string,
+  dispatch: Dispatch
+) => {
+  try {
+    const res = await axios.get(
+      `/api/films?page=${pageNo}&category=${category}`
+    );
+    dispatch(setFilterFilms(res.data.results));
+  } catch (e) {
+    console.log(e);
   }
-}
+};
+export const followUser = async (follow: {
+  userId: string;
+  followerId: string;
+}) => {
+  try {
+    await axios.post("/api/follow", follow);
+  } catch (e) {
+    console.log(e);
+  }
+};

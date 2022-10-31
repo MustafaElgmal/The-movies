@@ -1,7 +1,7 @@
-import { followValidation } from "./../../utils/validations";
+import { followValidation } from "../../../utils/validations";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../../lib/prisma";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +25,6 @@ export default async function handler(
       } catch (e) {
         res.status(500).json({ message: "Server is dwon!" });
       }
-
       break;
     default:
       res.status(400).json({ message: "Api is not found!" });

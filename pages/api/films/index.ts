@@ -17,7 +17,9 @@ export default async function handler(
         const { page, category } = req.query;
         let films = [];
         if (category === "Popular") {
-          films = await prisma.film.findMany({include: { raviews: true, rates: true },});
+          films = await prisma.film.findMany({
+            include: { raviews: true, rates: true },
+          });
         } else {
           const categoryFind = await prisma.category.findFirst({
             where: { name: category as string },

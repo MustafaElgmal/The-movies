@@ -7,8 +7,15 @@ import { prisma } from "../../lib/prisma";
 import { AppProps } from "../../types";
 import Header from "../../components/header";
 import { calcRate } from "../../utils/functions";
+import { followUser } from "../../utils/apis";
+import { useAppSelector } from "../../redux/app/hookes";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 const User = ({ user, followings }: AppProps) => {
+  const profile = useAppSelector((state) => state.profileSlice.profile);
+  const isLoggedIn = useAppSelector((state) => state.profileSlice.isLoggedIn);
+  const router = useRouter();
   return (
     <div className="bgcolor min-h-screen">
       <Header />
@@ -27,7 +34,15 @@ const User = ({ user, followings }: AppProps) => {
           </div>
           <div>
             <h1 className="text-white text-2xl font-bold">{user?.fullName}</h1>
-            <button className="mt-5 px-5 py-2 bg-gray-500 text-gray-300 uppercase hover:bg-gray-400 hover:text-white">
+            <button
+              type="button"
+              className="mt-5 px-5 py-2 bg-gray-500 text-gray-300 uppercase hover:bg-gray-400 hover:text-white"
+              onClick={() => {
+                isLoggedIn
+                  ? followUser({ userId: user?.id!, followerId: profile.id })
+                  : router.push("/signin");
+              }}
+            >
               Follow
             </button>
           </div>

@@ -33,7 +33,7 @@ const Profile = () => {
               className="h-40 w-40   rounded-full bg-gray-100"
             />
 
-            <div>
+            <div className="pt-5">
               <div>
                 <div className="flex justify-center items-center w-full">
                   <label
@@ -67,9 +67,6 @@ const Profile = () => {
           </div>
           <div>
             <h1 className="text-white text-2xl font-bold">{user?.fullName}</h1>
-            <button className="mt-5 px-5 py-2 bg-gray-500 text-gray-300 uppercase hover:bg-gray-400 hover:text-white">
-              Follow
-            </button>
           </div>
         </div>
         <div className=" pt-20 sm:pt-0 flex py-10 sm:py-20 space-x-6">
