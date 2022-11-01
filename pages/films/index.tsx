@@ -36,7 +36,7 @@ const Films = ({categories}:AppProps) => {
 };
 
 export const getStaticProps:GetStaticProps = async () => {
-  const categories = await prisma.category.findMany({});
+  const categories = await prisma.category.findMany();
   return {
     props: { categories },
     revalidate:604800

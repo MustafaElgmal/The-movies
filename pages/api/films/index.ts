@@ -1,3 +1,4 @@
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { filmValidation } from "../../../utils/validations";
@@ -15,6 +16,10 @@ export default async function handler(
       }
       try {
         const { page, category } = req.query;
+        const pageNo = +page!;
+        const limit = 8;
+        const startIndx = (pageNo - 1) * limit;
+        const endIndx = pageNo * limit;
         let films = [];
         if (category === "Popular") {
           films = await prisma.film.findMany({
@@ -33,11 +38,6 @@ export default async function handler(
           });
         }
 
-        const pageNo = +page!;
-        const limit = 8;
-        const startIndx = (pageNo - 1) * limit;
-        const endIndx = pageNo * limit;
-
         res.status(200).json({
           page,
           results: films.slice(startIndx, endIndx),
@@ -52,3 +52,4 @@ export default async function handler(
       res.status(200).json({ name: "Api is not found!" });
   }
 }
+

@@ -11,7 +11,7 @@ import {
 
 export interface AppProps {
   categories?: Category[];
-  film?: Film;
+  film?: FilmType;
   members?: userType[];
   user?: userType;
   profile?: User;
@@ -19,6 +19,12 @@ export interface AppProps {
   favoriteFilms?: FilmType[];
   followings?: Follower[];
   followers?: Follower[];
+  setShow?: Function;
+  rate?: number;
+  setRate?: Function;
+  Like?: boolean;
+  setLike?: Function;
+  id?:number
 }
 export interface UserCreate {
   id?: string;
@@ -27,8 +33,13 @@ export interface UserCreate {
   password: string;
 }
 export interface FilmType extends Film {
-  raviews: Review[];
+  raviews: ReviewType[];
   rates: Rate[];
+ 
+}
+
+export interface ReviewType extends Review {
+  user?: User;
 }
 
 export interface Movie {
@@ -53,11 +64,9 @@ export interface userType extends User {
   favoriteFilms: favoriteFilmType[];
   followers: Follower[];
   followings: number;
-  reviews:Review[]
+  reviews: Review[];
 }
 
 export interface favoriteFilmType extends FavoriteFilm {
   film: FilmType;
 }
-
-

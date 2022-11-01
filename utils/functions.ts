@@ -1,5 +1,5 @@
 import { userType } from "./../types";
-import { FavoriteCategory, Rate, User } from "@prisma/client";
+import { FavoriteCategory, Follower, Rate, User } from "@prisma/client";
 import { navItems, navItems2 } from "./../constants/index";
 
 export const handelClick = (name: string, setItems: Function) => {
@@ -73,6 +73,20 @@ export const calcRate = (filmRateS: Rate[]) => {
   return sum / filmRateS.length;
 };
 
+export const updateFollowButton = (
+  followers: Follower[],
+  profileId: string,
+  setIsFollow: Function
+) => {
+  let isFollow = false;
+  followers.forEach((follower) =>
+    follower.followerId === profileId ? (isFollow = true) : isFollow
+  );
+  setIsFollow(isFollow);
+};
 
-
-
+export const calcRateWithUserId = (filmRates: Rate[], userId: string) => {
+  const rate = filmRates.find((rate) => rate.userId === userId);
+  if (!rate) return 0;
+  return rate.star;
+};

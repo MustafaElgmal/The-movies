@@ -156,12 +156,49 @@ export const getFilterFilms = async (
     console.log(e);
   }
 };
-export const followUser = async (follow: {
+export const followUser = async (
+  follow: { userId: string; followerId: string },
+  isFollow: boolean
+) => {
+  try {
+    if (isFollow) {
+      await axios.post("/api/unfollow");
+    } else {
+      await axios.post("/api/follow", follow);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addReview = async (
+  filmId: number,
+  review: { text: string; userId: string }
+) => {
+  try {
+    await axios.post(`/api/reviews/${filmId}`, review);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addRating = async (
+  filmId: number,
+  rate: { star: number; userId: string }
+) => {
+  try {
+    await axios.post(`/api/rates/${filmId}`, rate);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const addFavoriteFilms = async (favoriteFilm: {
+  filmId: number;
   userId: string;
-  followerId: string;
 }) => {
   try {
-    await axios.post("/api/follow", follow);
+    await axios.post(`/api/users/favoriteFilm`, favoriteFilm);
   } catch (e) {
     console.log(e);
   }

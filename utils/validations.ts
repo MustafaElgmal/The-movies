@@ -93,6 +93,28 @@ export const reviewsValidation = async (review: {
   }
   return errors;
 };
+export const ratesValidation = async (rate: {
+  star: number;
+  userId: string;
+}) => {
+  const errors: { message: string }[] = [];
+  const { star, userId } = rate;
+  if (!star) {
+    errors.push({ message: "stars is required!" });
+  }
+  if (!userId) {
+    errors.push({ message: "UserId is required!" });
+  } else {
+    if (typeof userId !== "string") {
+      errors.push({ message: "UserId must be string!" });
+    }
+    const user = await prisma.user.findFirst({ where: { id: userId } });
+    if (!user) {
+      errors.push({ message: "user is not found!" });
+    }
+  }
+  return errors;
+};
 
 export const followValidation = async (follow: {
   userId: string;
@@ -178,6 +200,33 @@ export const filmValidation = (req: NextApiRequest) => {
   } else {
     if (typeof req.query.page !== "string") {
       errors.push({ message: "Please must enter string ascategory!" });
+    }
+  }
+  return errors;
+};
+export const favoriteFilmValidation = async (favoritefilm: {
+  filmId: number;
+  userId: string;
+}) => {
+  const errors: { message: string }[] = [];
+  const { filmId, userId } = favoritefilm;
+  if (!filmId) {
+    errors.push({ message: "filmId is required!" });
+  } else {
+    const film = await prisma.film.findFirst({ where: { id: filmId } });
+    if (!film) {
+      errors.push({ message: "film is not found!" });
+    }
+  }
+  if (!userId) {
+    errors.push({ message: "UserId is required!" });
+  } else {
+    if (typeof userId !== "string") {
+      errors.push({ message: "UserId must be string!" });
+    }
+    const user = await prisma.user.findFirst({ where: { id: userId } });
+    if (!user) {
+      errors.push({ message: "user is not found!" });
     }
   }
   return errors;

@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import type {  NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
-import {
-  getPopularFilms,
-} from "../utils/apis";
+import { getPopularFilms } from "../utils/apis";
 import Landing from "../components/landing";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/20/solid";
@@ -67,13 +65,15 @@ const Home: NextPage = () => {
                         </a>
                       </h3>
                       <div className="mt-3 flex flex-col items-center">
-                        
+                        <p className="sr-only">
+                          {film.vote_average} out of 5 stars
+                        </p>
                         <div className="flex items-center">
                           {[0, 1, 2, 3, 4].map((rating) => (
                             <StarIcon
                               key={rating}
                               className={classNames(
-                                5 > rating
+                                film.vote_average > rating
                                   ? "text-yellow-400"
                                   : "text-gray-200",
                                 "flex-shrink-0 h-5 w-5"
@@ -118,6 +118,5 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
 
 export default Home;

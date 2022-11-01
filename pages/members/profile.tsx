@@ -72,13 +72,13 @@ const Profile = () => {
         <div className=" pt-20 sm:pt-0 flex py-10 sm:py-20 space-x-6">
           <div className="border-r px-5 ">
             <span className="flex justify-center text-gray-500 font-extrabold text-xl">
-              {user.followers?.length}
+              {user.followings}
             </span>
             <h1 className="text-gray-700">Following</h1>
           </div>
           <div>
             <span className="flex justify-center text-gray-500 font-extrabold text-xl">
-              {user.followings}
+              {user.followers?.length}
             </span>
             <h1 className="text-gray-700">Followers</h1>
           </div>
