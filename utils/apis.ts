@@ -198,7 +198,8 @@ export const addFavoriteFilms = async (favoriteFilm: {
   userId: string;
 }) => {
   try {
-    await axios.post(`/api/users/favoriteFilm`, favoriteFilm);
+    const res=await axios.post(`/api/users/favoritefilm`, favoriteFilm);
+    console.log(res)
   } catch (e) {
     console.log(e);
   }

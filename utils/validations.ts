@@ -229,5 +229,13 @@ export const favoriteFilmValidation = async (favoritefilm: {
       errors.push({ message: "user is not found!" });
     }
   }
+  if (errors.length === 0) {
+    const favoriteFilm = await prisma.favoriteFilm.findFirst({
+      where: { userId, filmId },
+    });
+    if (favoriteFilm) {
+      errors.push({ message: "favoriteFilm is already exits!" });
+    }
+  }
   return errors;
 };

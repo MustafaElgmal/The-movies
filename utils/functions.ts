@@ -1,5 +1,5 @@
-import { userType } from "./../types";
-import { FavoriteCategory, Follower, Rate, User } from "@prisma/client";
+import { favoriteFilmType, userType } from "./../types";
+import { Follower, Rate } from "@prisma/client";
 import { navItems, navItems2 } from "./../constants/index";
 
 export const handelClick = (name: string, setItems: Function) => {
@@ -33,11 +33,12 @@ export const generateIndex = () => {
 export const getReconebdedUsers = (
   members: userType[],
   setUsers: Function,
-  favoriteCategories: FavoriteCategory[],
+  favoriteFilms: favoriteFilmType[],
   userId: string
 ) => {
+  console.log(favoriteFilms);
   const users: userType[] = [];
-  if (favoriteCategories.length === 0) {
+  if (favoriteFilms.length === 0) {
     if (members.length > 5) {
       for (let j = 0; j < 5; j++) {
         if (members[j].id !== userId) {
@@ -53,10 +54,12 @@ export const getReconebdedUsers = (
     }
   } else {
     for (let i = 0; i < members.length; i++) {
-      for (let j = 0; j < favoriteCategories.length; j++) {
-        if (members[i].favoriteCategories?.includes(favoriteCategories[j])) {
-          if (members[i].id !== userId) {
-            users.push(members[i]);
+      for (let j = 0; j < favoriteFilms.length; j++) {
+        for (let m = 0; m < members[i].favoriteFilms.length; m++) {
+          if (members[i].favoriteFilms[m].filmId === favoriteFilms[j].filmId) {
+            if (members[i].id !== userId) {
+              users.push(members[i]);
+            }
           }
         }
       }

@@ -14,7 +14,7 @@ const Members = ({ members }: AppProps) => {
   const [recomendUsers, setUser] = useState<userType[]>([]);
 
   useEffect(() => {
-    getReconebdedUsers(members!, setUser, user.favoriteCategories, user.id);
+    getReconebdedUsers(members!, setUser, user.favoriteFilms, user.id);
   }, []);
   return (
     <div className="bgcolor min-h-screen">
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuth({
   redirectTo: "/signin",
   async getServerSideProps(ctx) {
     const members = await prisma.user.findMany({
-      include: { favoriteCategories: true, reviews: true },
+      include: { favoriteFilms: true, reviews: true },
     });
 
     return { props: { members } };

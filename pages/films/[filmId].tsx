@@ -15,7 +15,6 @@ import { useAppSelector } from "../../redux/app/hookes";
 import ReviewModal from "../../components/ReviewModal";
 
 const FilmPage = ({ film }: AppProps) => {
-  console.log(film)
   const [rate, setRate] = useState(0);
   const [Like, setLike] = useState(false);
   const isLoggedIn = useAppSelector((state) => state.profileSlice.isLoggedIn);

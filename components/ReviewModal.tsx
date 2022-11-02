@@ -28,7 +28,8 @@ const ReviewModal = ({
     onSubmit: async (values) => {
       await addReview(film?.id!, { text: values.review, userId: profile.id });
       await addRating(film?.id!, { star: rate!, userId: profile.id });
-      await addFavoriteFilms({ filmId: film?.id!, userId: profile.id });
+      Like &&
+        (await addFavoriteFilms({ filmId: film?.id!, userId: profile.id }));
       formik.resetForm();
       setShow && setShow(false);
     },
@@ -133,7 +134,7 @@ const ReviewModal = ({
                     <div>
                       <div className="flex justify-between">
                         <p className="text-gray-100">Rating</p>
-                        <p className="text-gray-900">3 out of 5</p>
+                        <p className="text-gray-900">{rate!>5?'5':rate} out of 5</p>
                       </div>
                       <div
                         className="flex"
