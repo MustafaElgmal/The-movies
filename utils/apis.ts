@@ -158,14 +158,20 @@ export const getFilterFilms = async (
 };
 export const followUser = async (
   follow: { userId: string; followerId: string },
-  isFollow: boolean
+  isFollow: boolean,
+  setIsFollow: Function,
+  SetFollower: Function,
+  follower: number
 ) => {
   try {
     if (isFollow) {
-      await axios.post("/api/unfollow");
+      await axios.post("/api/unfollow", follow);
+      SetFollower(follower - 1);
     } else {
       await axios.post("/api/follow", follow);
+      SetFollower(follower + 1);
     }
+    setIsFollow(!isFollow);
   } catch (e) {
     console.log(e);
   }
@@ -198,8 +204,8 @@ export const addFavoriteFilms = async (favoriteFilm: {
   userId: string;
 }) => {
   try {
-    const res=await axios.post(`/api/users/favoritefilm`, favoriteFilm);
-    console.log(res)
+    const res = await axios.post(`/api/users/favoritefilm`, favoriteFilm);
+    console.log(res);
   } catch (e) {
     console.log(e);
   }

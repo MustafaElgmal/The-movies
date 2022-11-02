@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const User = ({ user, followings }: AppProps) => {
+  const [follower, setFolloer] = useState(user?.followers?.length);
   const [isFollow, setIsFollow] = useState(false);
   const profile = useAppSelector((state) => state.profileSlice.profile);
   const isLoggedIn = useAppSelector((state) => state.profileSlice.isLoggedIn);
@@ -45,7 +46,10 @@ const User = ({ user, followings }: AppProps) => {
                 isLoggedIn
                   ? followUser(
                       { userId: user?.id!, followerId: profile.id },
-                      isFollow
+                      isFollow,
+                      setIsFollow,
+                      setFolloer,
+                      follower!
                     )
                   : router.push("/signin");
               }}
@@ -63,7 +67,7 @@ const User = ({ user, followings }: AppProps) => {
           </div>
           <div>
             <span className="flex justify-center text-gray-500 font-extrabold text-xl">
-              {user?.followers?.length}
+              {follower}
             </span>
             <h1 className="text-gray-700">Followers</h1>
           </div>
