@@ -62,7 +62,7 @@ const FilmPage = ({ film }: AppProps) => {
           </div>
           {!isLoggedIn ? (
             <div onClick={() => router.push("/signin")}>
-              <span className="mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-600 bg-gray-600 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-300 sm:w-auto lg:w-full">
+              <span className="mt-6 inline-flex w-full items-center cursor-pointer justify-center rounded-md border border-gray-600 bg-gray-600 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-300 sm:w-auto lg:w-full">
                 Sign in to Write a review
               </span>
             </div>
