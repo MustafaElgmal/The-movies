@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { createUser } from "../utils/apis";
+import { createUser, createUserWithFacebook, createUserWithGoogle } from "../utils/apis";
 
 export default function SignIn() {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -55,8 +55,8 @@ export default function SignIn() {
 
                 <div className="mt-1 grid grid-cols-2 gap-3">
                   <div>
-                    <a
-                      href="#"
+                    <div
+                     onClick={()=>createUserWithFacebook(router)}
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">Sign up with Facebook</span>
@@ -72,13 +72,13 @@ export default function SignIn() {
                           fill="black"
                         />
                       </svg>
-                    </a>
+                    </div>
                   </div>
 
                   <div>
-                    <a
-                      href="#"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                    <div
+                      onClick={()=>createUserWithGoogle(router)}
+                      className="inline-flex w-full justify-center cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">Sign up with Gmail</span>
                       <svg
@@ -90,7 +90,7 @@ export default function SignIn() {
                       >
                         <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
                       </svg>
-                    </a>
+                    </div>
                   </div>
                 </div>
               </div>

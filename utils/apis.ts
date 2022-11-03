@@ -6,7 +6,7 @@ import axios from "axios";
 import { setFilterFilms, setPopularFilms } from "../redux/features/filmsSlice";
 import { NextRouter } from "next/router";
 import { setProfile } from "../redux/features/profileSlice";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 export const createUser = async (
   userr: UserCreate,
@@ -35,17 +35,48 @@ export const createUser = async (
   }
 };
 
-export const createUserwithFacebook = async (
-  router: NextRouter,
-  supabaseClient: SupabaseClient<any, "public", any>
-) => {
+export const createUserWithFacebook = async (router: NextRouter) => {
   try {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "facebook",
+      options:{
+        redirectTo:'/signin'
+      }
     });
-    
-    router.push("/");
-  } catch (e) {}
+    if (data) {
+      console.log(data)
+      
+    } else {
+      alert("User is not found!");
+      
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const createUserWithGoogle = async (router: NextRouter) => {
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (data) {
+      router.push("/");
+    } else {
+      alert("User is not found!");
+      router.push("/signin");
+    }
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const signInUser = async (
