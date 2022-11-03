@@ -43,15 +43,15 @@ const Home: NextPage = () => {
             <h3 className="text-gray-500 pb-3 pt-10">Popular Films</h3>
             <h2 className="sr-only">films</h2>
 
-            <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
+            <div className="-mx-px grid grid-cols-2 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.id}`}>
-                  <div className="group relative border-r border-b border-gray-200 p-4 sm:p-6 cursor-pointer">
+                  <div className="group relative  p-4 sm:p-6 cursor-pointer">
                     <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                       <img
                         src={`https://image.tmdb.org/t/p/w780/${film.poster_path}`}
                         alt="NoPhoto"
-                        className="h-full w-full object-cover object-center"
+                        className="h-full w-full"
                       />
                     </div>
                     <div className="pt-10 pb-4 text-center">

@@ -18,11 +18,9 @@ const FilmPage = ({ film }: AppProps) => {
   const [rate, setRate] = useState(0);
   const [Like, setLike] = useState(false);
   const isLoggedIn = useAppSelector((state) => state.profileSlice.isLoggedIn);
+  const profile = useAppSelector((state) => state.profileSlice.profile);
   const router = useRouter();
   const [Show, setShow] = useState(false);
-  useEffect(() => {
-    console.log(rate);
-  }, [rate]);
   return (
     <div className="bgcolor min-h-screen">
       <div
@@ -119,56 +117,64 @@ const FilmPage = ({ film }: AppProps) => {
           )}
         </div>
       </div>
-      <div className="mx-auto  max-w-7xl px-6  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
-        <h3 className="text-gray-500 pb-3">POPULAR REVIEWS</h3>
+      {film?.raviews.length! > 0 ? (
+        <div className="mx-auto  max-w-7xl px-6  sm:px-6 lg:px-8 lg:gap-20 pb-5 pt-10">
+          <h3 className="text-gray-500 pb-3">POPULAR REVIEWS</h3>
 
-        <div>
-          <div className="divide-y divide-gray-200">
-            {film?.raviews.map((review) => (
-              <div key={review.id} className="py-12">
-                <div className="flex items-center">
-                  <img
-                    src={`${
-                      review.user?.imageUrl
-                        ? review.user.imageUrl
-                        : "https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/sign/images/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvMzYwX0ZfMzQ2ODM5NjgzXzZuQVB6YmhwU2tJcGI4cG1Bd3Vma0M3YzVlRDd3WXdzLmpwZyIsImlhdCI6MTY2NjczODk5NiwiZXhwIjoxOTgyMDk4OTk2fQ.m8DMrMAaUazk13SE5o18af1ECIG400iofEsZ_M3_Jvk"
-                    }`}
-                    alt="Profile"
-                    className="h-12 w-12 rounded-full"
-                  />
-                  <div className="ml-4">
-                    <Link href={`/members/${review.id}`}>
-                      <a className="text-sm font-bold text-gray-400">
-                        {review.user?.fullName}
-                      </a>
-                    </Link>
-                    <div className="mt-1 flex items-center">
-                      {[0, 1, 2, 3, 4].map((rating) => (
-                        <StarIcon
-                          key={rating}
-                          className={classNames(
-                            calcRateWithUserId(film.rates, review.user?.id!) >
-                              rating
-                              ? "text-yellow-400"
-                              : "text-gray-300",
-                            "h-5 w-5 flex-shrink-0"
-                          )}
-                          aria-hidden="true"
-                        />
-                      ))}
+          <div>
+            <div className="divide-y divide-gray-200">
+              {film?.raviews.map((review) => (
+                <div key={review.id} className="py-12">
+                  <div className="flex items-center">
+                    <img
+                      src={`${
+                        review.user?.imageUrl
+                          ? review.user.imageUrl
+                          : "https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/sign/images/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvMzYwX0ZfMzQ2ODM5NjgzXzZuQVB6YmhwU2tJcGI4cG1Bd3Vma0M3YzVlRDd3WXdzLmpwZyIsImlhdCI6MTY2NjczODk5NiwiZXhwIjoxOTgyMDk4OTk2fQ.m8DMrMAaUazk13SE5o18af1ECIG400iofEsZ_M3_Jvk"
+                      }`}
+                      alt="Profile"
+                      className="h-12 w-12 rounded-full"
+                    />
+                    <div className="ml-4">
+                      <Link
+                        href={`${
+                          review.user?.id === profile.id
+                            ? "/members/profile"
+                            : "/members/${review.user?.id}"
+                        }`}
+                      >
+                        <a className="text-sm font-bold text-gray-400">
+                          {review.user?.fullName}
+                        </a>
+                      </Link>
+                      <div className="mt-1 flex items-center">
+                        {[0, 1, 2, 3, 4].map((rating) => (
+                          <StarIcon
+                            key={rating}
+                            className={classNames(
+                              calcRateWithUserId(film.rates, review.user?.id!) >
+                                rating
+                                ? "text-yellow-400"
+                                : "text-gray-300",
+                              "h-5 w-5 flex-shrink-0"
+                            )}
+                            aria-hidden="true"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div
-                  className="mt-4 space-y-6 text-base italic text-gray-400"
-                  dangerouslySetInnerHTML={{ __html: review.text }}
-                />
-              </div>
-            ))}
+                  <div
+                    className="mt-4 space-y-6 text-base italic text-gray-400"
+                    dangerouslySetInnerHTML={{ __html: review.text }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
       {Show ? (
         <ReviewModal
           film={film}
@@ -193,7 +199,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     where: { id: +id! },
     include: {
       raviews: { include: { user: true } },
-      rates: true
+      rates: true,
     },
   });
   return { props: { film } };

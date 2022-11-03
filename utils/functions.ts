@@ -36,7 +36,6 @@ export const getReconebdedUsers = (
   favoriteFilms: favoriteFilmType[],
   userId: string
 ) => {
-  console.log(favoriteFilms);
   const users: userType[] = [];
   if (favoriteFilms.length === 0) {
     if (members.length > 5) {

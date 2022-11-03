@@ -59,7 +59,7 @@ export default function SignIn() {
                         const { data, error } = await supabaseClient.auth.signInWithOAuth({
                           provider: "facebook",
                         });
-                        console.log(data)
+                        
                         router.push("/");
                       }}
                     
@@ -198,7 +198,7 @@ export default function SignIn() {
       <div className="relative hidden w-0 flex-1 lg:block">
         <img
           className="absolute inset-0 h-full w-full object-cover"
-          src="https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/sign/images/corina-rainer-P2wLo_PzHjU-unsplash.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvY29yaW5hLXJhaW5lci1QMndMb19QekhqVS11bnNwbGFzaC5qcGciLCJpYXQiOjE2NjU2ODUwMTUsImV4cCI6MTk4MTA0NTAxNX0.FMXIDCFTqJnnyxYupxmWX-8zY11U5kMgjgUFauEVi78"
+          src="https://gdbgnlodeaeojoowuqoc.supabase.co/storage/v1/object/public/images/corina-rainer-P2wLo_PzHjU-unsplash%20(1).jpg"
           alt=""
         />
       </div>

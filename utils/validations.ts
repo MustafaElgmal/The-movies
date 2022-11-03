@@ -181,7 +181,6 @@ export const photoValidation = (photo: { url: string }) => {
       errors.push({ message: "Url is not vaild!" });
     }
   }
-  console.log(errors);
   return errors;
 };
 

@@ -26,15 +26,15 @@ export default function FilmCard() {
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">films</h2>
 
-        <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
+        <div className="-mx-px grid grid-cols-2  sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
           {films.map((film) => (
             <Link key={film.id} href={`/films/${film.id}`}>
-              <div className="group relative border-r border-b border-gray-200 p-4 sm:p-6 cursor-pointer">
+              <div className="group relative  p-4 sm:p-6 cursor-pointer">
                 <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                   <img
                     src={`https://image.tmdb.org/t/p/w780/${film.profilePath}`}
                     alt="Film"
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full"
                   />
                 </div>
                 <div className="pt-10 pb-4 text-center">

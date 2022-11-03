@@ -43,7 +43,7 @@ export const createUserwithFacebook = async (
     const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: "facebook",
     });
-    console.log(data);
+    
     router.push("/");
   } catch (e) {}
 };
@@ -205,7 +205,6 @@ export const addFavoriteFilms = async (favoriteFilm: {
 }) => {
   try {
     const res = await axios.post(`/api/users/favoritefilm`, favoriteFilm);
-    console.log(res);
   } catch (e) {
     console.log(e);
   }
