@@ -34,7 +34,7 @@ export default function FilmCard() {
                   <img
                     src={`https://image.tmdb.org/t/p/w780/${film.profilePath}`}
                     alt="Film"
-                    className="h-full w-full"
+                    className="h-full w-[780px]"
                   />
                 </div>
                 <div className="pt-10 pb-4 text-center">

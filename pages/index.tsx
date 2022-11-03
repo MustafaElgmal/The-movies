@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   const films = useAppSelector((state) => state.filmsSlice.popularFilms);
   const [pageNo, setPageNo] = useState(generateNumber());
   const [imageUrl, setImageUrl] = useState();
+  console.log(films)
 
   const dispatch = useDispatch();
   const updatePopularFilms = async () => {
@@ -51,7 +52,7 @@ const Home: NextPage = () => {
                       <img
                         src={`https://image.tmdb.org/t/p/w780/${film.poster_path}`}
                         alt="NoPhoto"
-                        className="h-full w-full"
+                        className="h-full w-[780px]"
                       />
                     </div>
                     <div className="pt-10 pb-4 text-center">
