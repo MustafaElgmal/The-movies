@@ -56,7 +56,7 @@ export default function SignIn() {
                 <div className="mt-1 grid grid-cols-2 gap-3">
                   <div>
                     <div
-                     onClick={()=>createUserWithFacebook(router)}
+                     
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">Sign up with Facebook</span>
@@ -77,7 +77,7 @@ export default function SignIn() {
 
                   <div>
                     <div
-                      onClick={()=>createUserWithGoogle(router)}
+                      
                       className="inline-flex w-full justify-center cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">Sign up with Gmail</span>
