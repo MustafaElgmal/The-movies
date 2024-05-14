@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 
   const dispatch = useDispatch();
   const updatePopularFilms = async () => {
-    await getPopularFilms(dispatch, pageNo, setImageUrl);
+    await getPopularFilms(dispatch, pageNo, setImageUrl)
   };
 
   useEffect(() => {
